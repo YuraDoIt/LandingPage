@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/YuraDoIt/LandingPage/issues"
   },
-  "homepage": "https://github.com/YuraDoIt/LandingPage#readme"
+  "homepage": "https://github.com/YuraDoIt/LandingPage#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.11",
+    "gulp": "^4.0.2",
+    "gulp-pug": "^5.0.0",
+    "gulp-sass": "^5.1.0"
+  }
 }
