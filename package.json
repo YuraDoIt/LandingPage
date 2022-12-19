@@ -1,0 +1,20 @@
+{
+  "name": "lending",
+  "version": "1.0.0",
+  "description": "**Landing page**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuraDoIt/LandingPage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YuraDoIt/LandingPage/issues"
+  },
+  "homepage": "https://github.com/YuraDoIt/LandingPage#readme"
+}
