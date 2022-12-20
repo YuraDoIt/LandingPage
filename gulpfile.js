@@ -1,19 +1,12 @@
 const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const pug = require('gulp-pug');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const spritesmith = require('gulp.spritesmith');
 const rimraf = require('rimraf')
 
-//Sass
-gulp.task('sass', () => { 
-  return gulp.src('source/styles/main.scss')
-  .pipe(sass().on('error', sass.logError))
-  .pipe(gulp.dest('build/css'))
-})
 
-
-//Server
+/* -------- Server  -------- */
 gulp.task('browser', () => {
   browserSync.init({
     server: {
@@ -34,6 +27,14 @@ gulp.task('templates:compile', function buildHTML() {
   .pipe(gulp.dest('build'))
 });
 
+//Sass
+gulp.task('sass', () => { 
+  return gulp.src('source/styles/main.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('build/css'))
+})
+
+
 //gulp sprite 
 gulp.task('sprite', function(cb) {
   const spriteData = gulp.src('source/image/icons/*.png')
@@ -49,7 +50,7 @@ gulp.task('sprite', function(cb) {
 });
 
 //gulp delete
-gulp.task('clean', (cb) => {
+gulp.task('clean', function del(cb) {
   return rimraf('build', cb)
 });
 
@@ -63,4 +64,21 @@ gulp.task('copy:fonts', () => {
 gulp.task('copy:images', () => {
   return gulp.src('./source/images/**/*.*')
   .pipe(gulp.dest('build/images'));
-})
+});
+
+//copy
+gulp.task('copy', gulp.parallel('copy:fonts', 'copy:images'));
+
+//-----Watchers--------
+gulp.task('watch', () => {
+  gulp.watch('source/template/**/*.pug', gulp.series('templates:compile'));
+  gulp.watch('source/styles/**/*.scss', gulp.series('sass'));
+  return true;
+});
+
+gulp.task('default', gulp.series(
+  'clean',
+  gulp.parallel('templates:compile', 'sass',  'sprite', 'copy'),
+  gulp.parallel('watch', 'browser')
+  )
+);
