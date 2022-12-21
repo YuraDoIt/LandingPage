@@ -3,15 +3,16 @@ const browserSync = require('browser-sync').create();
 const pug = require('gulp-pug');
 const sass = require('gulp-sass')(require('sass'));
 const spritesmith = require('gulp.spritesmith');
-const rimraf = require('rimraf')
+const rimraf = require('rimraf');
+const rename = require('gulp-rename');
 
-
+//Base dir folder where will be taken main html file
 /* -------- Server  -------- */
 gulp.task('browser', () => {
   browserSync.init({
     server: {
       port: 9000,
-      baseDir: "source"
+      baseDir: "build"
     }
   });
 
@@ -30,7 +31,8 @@ gulp.task('templates:compile', function buildHTML() {
 //Sass
 gulp.task('sass', () => { 
   return gulp.src('source/styles/main.scss')
-  .pipe(sass().on('error', sass.logError))
+  .pipe(sass({outputStyle: "compressed"}).on('error', sass.logError))
+  .pipe(rename('main.min.css'))
   .pipe(gulp.dest('build/css'))
 })
 
